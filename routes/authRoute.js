@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const authCont = require("../controllers/authCont.js");
 
-router.get("/login", (req, res) => {
-  res.send("Login page");
-});
-
-router.get("/", (req, res) => {
-  res.send("Home page");
-});
+router.post("/signup", authCont.SignUp);
 
 module.exports = router;

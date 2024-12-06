@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const { generateTokenAndSetCookie } = require("../middleware/jwt.js");
 
 exports.SignUp = async (req, res) => {
   try {
@@ -8,6 +9,7 @@ exports.SignUp = async (req, res) => {
       return res.status(400).json({ error: "User already exists" });
     }
     const user = await User.create({ name, email, phoneNumber });
+    generateTokenAndSetCookie(res, user._id);
     res.status(201).json({
       message: "User created successfully",
       user,

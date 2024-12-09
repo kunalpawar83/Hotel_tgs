@@ -28,7 +28,7 @@ exports.SignUp = async (req, res) => {
     if (existUser) {
       return res.status(400).json({
         success: false,
-        error: "Email already exists",
+        error: "Email and User already exists",
       });
     }
     const user = await User.create({ name, email, phoneNumber });

@@ -12,10 +12,6 @@ exports.SignUp = async (req, res) => {
     if (phoneNumber.length !== 10) {
       return res.status(400).json({ error: "Phone number must be 10 digits" });
     }
-    const emailRegex = /\S+@\S+\.\S+/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid email" });
-    }
     const phoneNumberExist = await User.findOne({ phoneNumber });
     if (phoneNumberExist) {
       return res.status(400).json({ error: "Phone number already exists" });

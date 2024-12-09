@@ -6,6 +6,20 @@ exports.SignUp = async (req, res) => {
   try {
     const { name, email, phoneNumber } = req.body;
     const existUser = await User.findOne({ email });
+    if (!name || !email || !phoneNumber) {
+      return res.status(400).json({ error: "Please fill in all fields" });
+    }
+    if (phoneNumber.length !== 10) {
+      return res.status(400).json({ error: "Phone number must be 10 digits" });
+    }
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email" });
+    }
+    const phoneNumberExist = await User.findOne({ phoneNumber });
+    if (phoneNumberExist) {
+      return res.status(400).json({ error: "Phone number already exists" });
+    }
     if (existUser) {
       return res.status(400).json({ error: "User already exists" });
     }

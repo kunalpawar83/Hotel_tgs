@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const { generateTokenAndSetCookie } = require("../middleware/jwt.js");
+const { generateToken } = require("../middleware/jwt.js");
 
 // Sign up a new user
 exports.SignUp = async (req, res) => {
@@ -32,10 +32,11 @@ exports.SignUp = async (req, res) => {
       });
     }
     const user = await User.create({ name, email, phoneNumber });
-    generateTokenAndSetCookie(res, user._id);
+    let token = generateToken(res, user._id);
     res.status(201).json({
       success: true,
       message: "User created successfully",
+      token,
       user,
     });
   } catch (error) {
@@ -54,10 +55,11 @@ exports.LogIn = async (req, res) => {
     if (!user) {
       return res.status(400).json({ error: "User does not exist" });
     }
-    generateTokenAndSetCookie(res, user._id);
+    generateToken(res, user._id);
     res.status(200).json({
       success: true,
       message: "User logged in successfully",
+      token,
       user,
     });
   } catch (error) {

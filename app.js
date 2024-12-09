@@ -11,7 +11,6 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://tgs-hotel.vercel.app/",
     credentials: true,
   })
 );

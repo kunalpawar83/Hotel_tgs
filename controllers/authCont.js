@@ -7,26 +7,42 @@ exports.SignUp = async (req, res) => {
     const { name, email, phoneNumber } = req.body;
     const existUser = await User.findOne({ email });
     if (!name || !email || !phoneNumber) {
-      return res.status(400).json({ error: "Please fill in all fields" });
+      return res.status(400).json({
+        success: false,
+        error: "Please fill in all fields",
+      });
     }
     if (phoneNumber.length !== 10) {
-      return res.status(400).json({ error: "Phone number must be 10 digits" });
+      return res.status(400).json({
+        success: false,
+        error: "Phone number must be 10 digits",
+      });
     }
     const phoneNumberExist = await User.findOne({ phoneNumber });
     if (phoneNumberExist) {
-      return res.status(400).json({ error: "Phone number already exists" });
+      return res.status(400).json({
+        success: false,
+        error: "Phone number already exists",
+      });
     }
     if (existUser) {
-      return res.status(400).json({ error: "User already exists" });
+      return res.status(400).json({
+        success: false,
+        error: "User already exists",
+      });
     }
     const user = await User.create({ name, email, phoneNumber });
     generateTokenAndSetCookie(res, user._id);
     res.status(201).json({
+      success: true,
       message: "User created successfully",
       user,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
   }
 };
 
@@ -40,10 +56,14 @@ exports.LogIn = async (req, res) => {
     }
     generateTokenAndSetCookie(res, user._id);
     res.status(200).json({
+      success: true,
       message: "User logged in successfully",
       user,
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
   }
 };

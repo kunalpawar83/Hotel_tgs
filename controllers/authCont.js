@@ -55,7 +55,7 @@ exports.LogIn = async (req, res) => {
     if (!user) {
       return res.status(400).json({ error: "User does not exist" });
     }
-    generateToken(res, user._id);
+    let token = generateToken(res, user._id);
     res.status(200).json({
       success: true,
       message: "User logged in successfully",

@@ -11,7 +11,8 @@ const menuCatagorySchema = new Schema(
       type: String,
     },
     image: {
-      type: String,
+      type: Object,
+      required: true,
     },
   },
   {

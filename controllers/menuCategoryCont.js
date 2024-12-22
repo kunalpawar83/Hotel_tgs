@@ -33,3 +33,18 @@ exports.Create = async (req, res) => {
     });
   }
 };
+
+// get all menu categories
+exports.GetAll = async (req, res) => {
+  try {
+    const menuCategories = await MenuCatagory.find();
+    return res.status(200).json({
+      message: "All menu categories",
+      menuCategories,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};

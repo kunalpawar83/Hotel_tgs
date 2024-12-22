@@ -8,5 +8,6 @@ router.post(
   upload.single("categoryImage"),
   menuCategoryController.Create
 );
+router.get("/menuGetAll", menuCategoryController.GetAll);
 
 module.exports = router;

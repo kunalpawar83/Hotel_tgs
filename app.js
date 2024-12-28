@@ -25,7 +25,10 @@ app.use("/menu-category", menuCategoryRoute);
 app.use("/menu", menuRoute);
 
 app.get("*", (req, res) => {
-  res.status(404).json({ message: "404 Not Found" });
+  res.status(404).json({
+    success: true,
+    message: "Page not found",
+  });
 });
 
 module.exports = app;
